@@ -1,0 +1,119 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:layout="clr-namespace:GraphSharp.Algorithms.Layout;assembly=GraphSharp"
+                    xmlns:simpleFdpLayout="clr-namespace:GraphSharp.Algorithms.Layout.Simple.FDP;assembly=GraphSharp"
+                    xmlns:simpleHierarchicalLayout="clr-namespace:GraphSharp.Algorithms.Layout.Simple.Hierarchical;assembly=GraphSharp"
+                    xmlns:simpleTreeLayout="clr-namespace:GraphSharp.Algorithms.Layout.Simple.Tree;assembly=GraphSharp"
+                    xmlns:overlapRemoval="clr-namespace:GraphSharp.Algorithms.OverlapRemoval;assembly=GraphSharp"
+                    xmlns:circular="clr-namespace:GraphSharp.Algorithms.Layout.Simple.Circular;assembly=GraphSharp"
+                    xmlns:fdp="clr-namespace:GraphSharp.Algorithms.Layout.Compound.FDP;assembly=GraphSharp">
+
+    <GridLength x:Key="LabelColumnWidth">175</GridLength>
+    <GridLength x:Key="ControlColumnWidth">150</GridLength>
+    
+    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type system:Enum}" x:Key="LayoutDirectionEnum">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="layout:LayoutDirection" />
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type system:Enum}" x:Key="TreeGenerationTypeEnum">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="simpleTreeLayout:SpanningTreeGeneration" />
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    
+    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type system:Enum}" x:Key="SugiyamaEdgeRoutingEnum">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="simpleHierarchicalLayout:SugiyamaEdgeRoutings" />
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+   
+    <DataTemplate DataType="{x:Type simpleTreeLayout:SimpleTreeLayoutParameters}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{StaticResource LabelColumnWidth}" />
+                <ColumnDefinition Width="{StaticResource ControlColumnWidth}" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="0">Висота</TextBlock>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                        Grid.Row="0">
+                <Slider Minimum="0"
+                        Maximum="50"
+                        Value="{Binding Path=LayerGap}"
+                        MinWidth="100" />
+                <TextBox Text="{Binding Path=LayerGap}" />
+            </StackPanel>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="1">Ширина</TextBlock>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                        Grid.Row="1">
+                <Slider Minimum="0"
+                        Maximum="50"
+                        Value="{Binding Path=VertexGap}"
+                        MinWidth="100" />
+                <TextBox Text="{Binding Path=VertexGap}" />
+            </StackPanel>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="2">Розташування</TextBlock>
+            <ComboBox ItemsSource="{Binding Source={StaticResource LayoutDirectionEnum}}"
+                      SelectedValue="{Binding Path=Direction}"
+                      Grid.Column="1"
+                      Grid.Row="2" />
+
+        </Grid>
+    </DataTemplate>
+   
+
+    <DataTemplate DataType="{x:Type overlapRemoval:OverlapRemovalParameters}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{StaticResource LabelColumnWidth}" />
+                <ColumnDefinition Width="{StaticResource ControlColumnWidth}" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="0">Horizontal Gap</TextBlock>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                        Grid.Row="0">
+                <Slider Minimum="0"
+                        Maximum="50"
+                        Value="{Binding Path=HorizontalGap}"
+                        MinWidth="100" />
+                <TextBox Text="{Binding Path=HorizontalGap}" />
+            </StackPanel>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="1">Vertical Gap</TextBlock>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                        Grid.Row="1">
+                <Slider Minimum="0"
+                        Maximum="50"
+                        Value="{Binding Path=VerticalGap}"
+                        MinWidth="100" />
+                <TextBox Text="{Binding Path=VerticalGap}" />
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
